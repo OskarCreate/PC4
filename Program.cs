@@ -6,7 +6,6 @@ using Microsoft.ML;
 using Microsoft.ML.Trainers;
 using Microsoft.ML.Trainers.Recommender;
 
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -50,9 +49,9 @@ app.MapRazorPages();
 // ML.NET - ANÁLISIS DE SENTIMIENTOS
 var mlContext = new MLContext();
 
-// Cargar datos de entrenamiento de sentimientos
+// Cargar datos de entrenamiento de sentimientos desde carpeta "data"
 var sentimentData = mlContext.Data.LoadFromTextFile<SentimentData>(
-    "sentiment-data.tsv", hasHeader: true, separatorChar: '\t');
+    "data/sentiment-data.tsv", hasHeader: true, separatorChar: '\t');
 
 // Construir pipeline de clasificación binaria
 var sentimentPipeline = mlContext.Transforms.Text.FeaturizeText("Features", nameof(SentimentData.Text))
@@ -74,7 +73,8 @@ Console.WriteLine($"Predicción: {(sentimentResult.Prediction ? "Positivo" : "Ne
 
 
 // ML.NET - SISTEMA DE RECOMENDACIÓN
-var ratingData = mlContext.Data.LoadFromTextFile<RatingData>("ratings-data.csv", hasHeader: true, separatorChar: ',');
+var ratingData = mlContext.Data.LoadFromTextFile<RatingData>(
+    "data/ratings-data.csv", hasHeader: true, separatorChar: ',');
 
 // Construir pipeline de recomendación
 var recommendationPipeline = mlContext.Transforms.Conversion.MapValueToKey("userIdEncoded", nameof(RatingData.UserId))

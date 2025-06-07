@@ -3,11 +3,12 @@ using Microsoft.ML.Data;
 public class SentimentData
 {
     [LoadColumn(0)]
-    public string Text { get; set; }
+    public bool Label { get; set; }    // Columna 0 es Label (true/false)
 
     [LoadColumn(1)]
-    public bool Label { get; set; }
+    public string Text { get; set; }   // Columna 1 es Text (el texto)
 }
+
 
 public class SentimentPrediction
 {
