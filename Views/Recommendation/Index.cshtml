@@ -1,0 +1,30 @@
+@model PC4.Models.SentimentData
+
+@{
+    ViewData["Title"] = "Recomendación de Productos";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<form asp-action="Recommend" method="post">
+    <div class="form-group">
+        <label for="userId">Ingrese el ID del usuario:</label>
+        <input type="text" name="userId" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-success mt-2">Recomendar</button>
+</form>
+
+@if (ViewBag.Recommendations != null)
+{
+    <div class="mt-4">
+        <h4>Top 3 productos recomendados para el usuario <strong>@ViewBag.UserId</strong>:</h4>
+        <ul class="list-group">
+            @foreach (var item in ViewBag.Recommendations)
+            {
+                <li class="list-group-item">
+                    Producto: <strong>@item.ProductId</strong> - Score: @item.Score
+                </li>
+            }
+        </ul>
+    </div>
+}

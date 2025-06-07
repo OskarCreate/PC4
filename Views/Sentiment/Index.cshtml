@@ -1,0 +1,22 @@
+@model PC4.Models.SentimentData
+@{
+    ViewData["Title"] = "Análisis de Sentimiento";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<form asp-action="Predict" method="post">
+    <div class="form-group">
+        <label for="Text">Escribe tu opinión:</label>
+        <textarea asp-for="Text" class="form-control" rows="4"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary mt-2">Analizar</button>
+</form>
+
+@if (ViewBag.Result != null)
+{
+    <div class="alert alert-info mt-4">
+        <strong>Predicción:</strong> @ViewBag.Result <br />
+        <strong>Probabilidad:</strong> @ViewBag.Probability
+    </div>
+}
